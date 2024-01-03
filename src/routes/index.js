@@ -3,12 +3,13 @@ const request = require('request');
 const axios = require('axios');
 const router = Router()
 
-router.get('/', (req, res)=>{
-    axios.get('https://www.lth.com.mx/api/fitment/years?type=Automotriz')
+LTH_URL = 'https://www.lth.com.mx';
+
+router.get('/years', (req, res)=>{
+    axios.get(LTH_URL+'/api/fitment/years?type=Automotriz', { params: { type: req.query.type } })
   .then(response => {
     const data = response.data;
-    console.log(data);
-    res.send(data)
+    res.json(data)
   })
   .catch(error => {
     console.log(error);
