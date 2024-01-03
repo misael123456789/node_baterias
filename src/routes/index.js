@@ -42,4 +42,16 @@ router.get('/models', (req, res)=>{
     
 });
 
+router.get('/find', (req, res)=>{
+    axios.get(LTH_URL+'/api/fitment/find', { params: { type: req.query.type, year: req.query.year, make: req.query.make, model: req.query.model, engine: req.query.engine} })
+  .then(response => {
+    const data = response.data;
+    res.json(data)
+  })
+  .catch(error => {
+    console.log(error);
+  });
+    
+});
+
 module.exports = router
