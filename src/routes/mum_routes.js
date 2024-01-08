@@ -41,6 +41,7 @@ router.post('/mum/week', async (req, res)=>{
 router.post('/mum/upload',type,(req,res,next)=>{
   var tmp_path = req.file.path;
   var target_path = 'src/upload/' + req.file.filename+'.png';
+  console.log(req.file.fieldname);
   fs.readFile(tmp_path, function(err, data){
     fs.writeFile(target_path, data, (err) => {
       const fileName = makeid(50);
