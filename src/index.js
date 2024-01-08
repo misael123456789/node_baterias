@@ -15,6 +15,7 @@ app.use(cors({origin: '*'}))
 
 //Import routers
 app.use(require('./routes/index'));
+app.use(require('./routes/mum_routes'));
 
 //middlewares
 app.use(morgan('dev'));
@@ -22,3 +23,4 @@ app.use(express.json());
 
 //start server
 app.listen(app.get('port'));
+
