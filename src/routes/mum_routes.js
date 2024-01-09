@@ -73,8 +73,41 @@ async function insertWeek(title, week, description, url){
   return res.rowCount
 }
 
-router.post('/mum/connect', (req, res)=>{
+async function deleteWeek(id){
+  client = new Client(optionPG);
+  await client.connect()
+  const query = {
+    text: 'DELETE FROM weeks WHERE id = $1',
+    values: [id],
+  }
   
+  const res = await client.query(query)
+  
+  await client.end()
+  return res.rowCount
+}
+
+async function gettWeeks(){
+  client = new Client(optionPG);
+  await client.connect()
+  const query = {
+    text: 'SELECT * FROM weeks ORDER BY week DESC',
+  }
+  
+  const res = await client.query(query)
+  
+  await client.end()
+  return res.rows
+}
+
+router.get('/mum/weeks',async  (req, res)=>{
+  const rows = await gettWeeks();
+  rows ? res.json({status:true, data: rows}) :  res.json({status:false})
+})
+
+router.post('/mum/deleteWeek',async  (req, res)=>{
+  const row = await deleteWeek(req.body.id);
+  row ? res.json({status:true}) :  res.json({status:false})
 })
 
 
